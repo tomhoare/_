@@ -1,0 +1,346 @@
+Select * from client_list_2;
+
+--add postcode to address
+
+Alter table Provider_list4 add column fulladdress text;
+UPDATE Provider_list4 set fulladdress = "Property Address"  || ", "  || "Property Postcode";
+
+-- create join_name column
+
+Alter table client_list_2 add column join_name text;
+UPDATE client_list_2 set join_name = "Client Surname"  || ", "  || "Client Forenames";
+
+--joinfulladdress + provider
+
+Create table GHL_w_provider_Faddress_5 as
+SELECT 
+client_list_2.*, Provider_list4."Client Nam e",
+Provider_list4.joinadd, Provider_list4.Provider, Provider_list4.fulladdress
+      
+  FROM client_list_2
+    LEFT JOIN Provider_list4
+     ON client_list_2.join_name = Provider_list4."Client Nam e" and client_list_2.Address = Provider_list4."joinadd" ;
+     
+SELECT "Client Name","Address","Client Nam e",
+joinadd, * FROM GHL_w_provider_Faddress_4 where fulladdress is null; 
+
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_advisor_name text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_lender text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_external_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_refinances_mortgage_with_external_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_charge int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_loan_purpose text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_payment_type text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_type text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_property_value int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_loan_amount int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_preferential_rate int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_term int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_expiry_date int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_start_date int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_description text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column property_external_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column property_value int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column property_address text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_external_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_submitted_but_not_completed text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_active text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_phone_number int;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_name text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_email text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_advisor_email text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_advisor_name text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_advisor_email text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column consumer_datatpipe_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column property_datapipe_id text;
+ALTER TABLE GHL_w_provider_Faddress_4 add column mortgage_datapipe_id text;
+
+UPDATE GHL_w_provider_Faddress_4 set mortgage_advisor_name = 'KL'; 
+UPDATE GHL_w_provider_Faddress_4 set consumer_email = "Email address";
+--UPDATE GHL_w_provider_Faddress_4 set consumer_name = "Applicant 1";
+UPDATE GHL_w_provider_Faddress_4 set consumer_phone_number = "Contact number";
+UPDATE GHL_w_provider_Faddress_4 set property_address = "fulladdress";
+UPDATE GHL_w_provider_Faddress_4 set property_value = "Mortgage Property Value";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_start_date = "Start Date";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_term = "Mortgage Term";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_preferential_rate = "Mortgage Interest Rate";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_loan_amount = "Mortgage Loan Value";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_property_value = "Mortgage Property Value";		
+UPDATE GHL_w_provider_Faddress_4 set mortgage_payment_type = "Mortgage Repayment Method";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_lender = "Provider";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_loan_purpose = "Mortgage type";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_type= "Mortgage Type";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_expiry_date = "Mortgage Deal Expiry Date";
+UPDATE GHL_w_provider_Faddress_4 set consumer_advisor_name = 'KL';
+
+SELECT consumer_advisor_name
+,mortgage_lender
+,mortgage_external_id
+,mortgage_refinances_mortgage_with_external_id
+,mortgage_charge
+,mortgage_loan_purpose
+,mortgage_payment_type
+,mortgage_type
+,mortgage_property_value
+,mortgage_loan_amount
+,mortgage_preferential_rate
+,mortgage_term
+,mortgage_expiry_date
+,mortgage_start_date
+,mortgage_description
+,property_external_id
+,property_value
+,property_address
+,consumer_external_id
+,consumer_submitted_but_not_completed
+,consumer_active
+,consumer_phone_number
+,consumer_name
+,consumer_email
+,mortgage_advisor_email
+,mortgage_advisor_name
+,consumer_advisor_email, * from GHL_w_provider_Faddress_4 group by mortgage_lender;
+
+UPDATE GHL_w_provider_Faddress_4 set mortgage_advisor_email = "Karl.Lawton@ghldirect.co.uk";
+UPDATE GHL_w_provider_Faddress_4 set mortgage_advisor_name = 'Karl Lawton';
+UPDATE GHL_w_provider_Faddress_4 set consumer_advisor_name = 'Karl Lawton';
+UPDATE GHL_w_provider_Faddress_4 set consumer_advisor_email = "Karl.Lawton@ghldirect.co.uk";
+
+UPDATE GHL_w_provider_Faddress_4 set mortgage_type = 'buy-to-let' where mortgage_type like 'BTL';
+UPDATE GHL_w_provider_Faddress_4 set mortgage_type = 'owner-occupied' where mortgage_type like 'Residential';
+
+UPDATE GHL_w_provider_Faddress_4 set mortgage_payment_type = 'repayment' where mortgage_payment_type like 'Capital & Interest';
+UPDATE GHL_w_provider_Faddress_4 set mortgage_payment_type = '' where mortgage_payment_type like 'Combination';
+UPDATE GHL_w_provider_Faddress_4 set mortgage_payment_type = 'interest-only' where mortgage_payment_type like 'Interest Only';
+
+UPDATE GHL_w_provider_Faddress_4 set mortgage_loan_purpose = '';
+
+
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Accord' where mortgage_lender like 'Accord' or mortgage_lender like 'Accord Mortgages' or mortgage_lender like 'Accord Mortgages (Residential)' or mortgage_lender like 'Accord Mortgages Limited';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Aldermore Mortgages' where mortgage_lender like 'Aldermore' or mortgage_lender like 'Aldermore Bank' or mortgage_lender like 'Aldermore Bank PLC';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Aviva Equity ' where mortgage_lender like 'Aviva Equity Release';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Axis Bank' where mortgage_lender like 'Axis Bank';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Bank of Cyprus' where mortgage_lender like 'Bank of Cyprus uk';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Bank Of Ireland' where mortgage_lender like 'Bank Of Ireland' or mortgage_lender like 'Bank of Ireland' or mortgage_lender like 'Bank of Ireland UK.';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Barclays Bank' where mortgage_lender like 'Barclays' or mortgage_lender like 'Barclays Bank PLC' or mortgage_lender like 'Barclays Bank PLC DONT USE' or mortgage_lender like 'Barclays Plc' or mortgage_lender like 'Barclays Bank PLC (trading as Woolwich)' or mortgage_lender like 'Barclays Woolwich' or mortgage_lender like 'Woolwich' or mortgage_lender like 'Barclays Mortgages';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Bluestone Mortgages' where mortgage_lender like 'Bluestone Mortgages';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'BM Solutions' where mortgage_lender like 'BM Solutions (LBG)' or mortgage_lender like 'B M Solutions' or mortgage_lender like 'Birmingham Midshires' or mortgage_lender like 'BM Solutions DO NOT USE' or mortgage_lender like 'BM';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Buckinghamshire BS' where mortgage_lender like 'Buckinghamshire Building Society' or mortgage_lender like 'Bucks BS';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Cambridge BS' where mortgage_lender like 'Cambridge BS' or mortgage_lender like 'Cambridge Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Clydesdale Bank' where mortgage_lender like 'Clydesdale Bank';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Co-Operative Bank' where mortgage_lender like 'Co-Operative Bank';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Coventry BS' where mortgage_lender like 'Coventry ' or mortgage_lender like 'Coventry Building Society' or mortgage_lender like 'Covnetry ' or mortgage_lender like 'Coventry B S' or mortgage_lender like 'Coventry Bsoc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Cumberland BS' where mortgage_lender like 'cumberland' or mortgage_lender like 'Cumberland Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Darlington BS' where mortgage_lender like 'Darlington B S';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Digital Mortgages' where mortgage_lender like 'Atom Bank';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Dudley BS' where mortgage_lender like 'Dudley Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Family Building Society (NCBS)' where mortgage_lender like 'Family BS' or mortgage_lender like 'Family BS via TBMC';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Foundation Home Loans' where mortgage_lender like 'Foundation';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Furness BS' where mortgage_lender like 'Furness BS' or mortgage_lender like 'Furness Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'GE Money' where mortgage_lender like 'GE Money Home Lending Limited';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Godiva Mortgages' where mortgage_lender like 'Godiva' or mortgage_lender like 'Godiva Mortgages Ltd';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Halifax' where mortgage_lender like 'Halifax BS' or mortgage_lender like 'Halifax (LBG)' or mortgage_lender like 'Halifax (Old Cases)' or mortgage_lender like 'Halifax Intermediaries' or mortgage_lender like 'Halifax is a division of Bank of Scotland plc' or mortgage_lender like 'Halifax Plc' or mortgage_lender like 'Halifax Service Excellence' or mortgage_lender like 'Halifax bs';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Handelsbanken' where mortgage_lender like 'Handelsbanken';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Hinckley & Rugby BS' where mortgage_lender like 'Hinckley & Rugby BS' or mortgage_lender like 'Hinckley & Rugby Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'HSBC' where mortgage_lender like 'HSBC Asset Management' or mortgage_lender like 'HSBC UK Bank plc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Impact Specialist Finance' where mortgage_lender like 'ATOM' or mortgage_lender like 'Impact (Formally ATOM)';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'ING Direct' where mortgage_lender like 'ING Direct';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Investec' where mortgage_lender like 'Investec';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Ipswich BS' where mortgage_lender like 'Ipswich Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Kensington Mortgages' where mortgage_lender like 'Kensington ' or mortgage_lender like 'Kensington Mortgage Company' or mortgage_lender like 'Kensington Mortgage Company Limited' or mortgage_lender like 'Kensington Mortgages';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Kent Reliance' where mortgage_lender like 'Kent Reliance' or mortgage_lender like 'Kent Reliance BS' or mortgage_lender like 'Kent Reliance Building Society' or mortgage_lender like 'OneSavings Bank plc t/a Kent Reliance';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Leeds BS' where mortgage_lender like 'Leeds Building Society' or mortgage_lender like 'Leeds Bsoc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Leek United BS' where mortgage_lender like 'Leek United Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Legal & General Home Finance' where mortgage_lender like 'Legal & General';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Lloyds Bank' where mortgage_lender like 'Lloyds';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Magellan Homeloans' where mortgage_lender like 'Magellan Home Loans';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Mansfield BS' where mortgage_lender like 'Mansfield';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Market Harborough BS' where mortgage_lender like 'Market Harborough Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'MBD Lending' where mortgage_lender like 'MBS Lending Limited';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Metro Bank' where mortgage_lender like 'Metrobank' or mortgage_lender like 'Metro Bank PLC';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Monmouthshire BS' where mortgage_lender like 'Monmouthshire' or mortgage_lender like 'Monmouthshire Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Mortgage Processing Centre' where mortgage_lender like 'Mortgage Processing Centre';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'MT Finance' where mortgage_lender like 'MT-Finance';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Nationwide BS' where mortgage_lender like 'Nationwide' or mortgage_lender like 'Nationwide Building Society' or mortgage_lender like 'Nationwide for Intermediaries' or mortgage_lender like 'National Counties Building Society' or mortgage_lender like 'Nat Counties BS' or mortgage_lender like 'Natiowide B Soc' or mortgage_lender like 'Nationwide Bsoc' or mortgage_lender like 'Nationwide B Soc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'NatWest' where mortgage_lender like 'National Westminster Bank' or mortgage_lender like 'National Westminster Bank Ltd' or mortgage_lender like 'National Westminster Bank plc' or mortgage_lender like 'NatWest' or mortgage_lender like 'Natwest Bank (RBSIP)' or mortgage_lender like 'NatWest Intermediaries' or mortgage_lender like 'NatWest Intermediary Solutions' or mortgage_lender like 'NatWest Mortgages' or mortgage_lender like 'NatWest Int Sols';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'New Street' where mortgage_lender like 'New Street Mortgages';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Newbury BS' where mortgage_lender like 'Newbury Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Newcastle BS' where mortgage_lender like 'Newcastle Building Society' or mortgage_lender like 'Newcastle Intermediary Services' or mortgage_lender like 'Newcastle Bsoc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Northern Rock BS' where mortgage_lender like 'Northern Rock BS';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Nottingham BS' where mortgage_lender like 'Nottingham ' or mortgage_lender like 'Nottingham Building Society' or mortgage_lender like 'Nottingham Bsoc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Nottingham BS' where mortgage_lender like 'The Nottingham' or mortgage_lender like 'The Nottingham Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Octopus Property' where mortgage_lender like 'Octopus Property';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Paragon Bank Plc' where mortgage_lender like 'Paragon' or mortgage_lender like 'Paragon Bank' or mortgage_lender like 'Paragon Mortgages' or mortgage_lender like 'Paragon Mortgages Ltd';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Paragon Banking Group PLC' where mortgage_lender like 'Mortgage Trust';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Pepper Money' where mortgage_lender like 'Pepper (UK) Ltd   ' or mortgage_lender like 'Pepper Homeloans' or mortgage_lender like 'Pepper Home Loans' or mortgage_lender like 'Pepper Money';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Platform' where mortgage_lender like 'Platform' or mortgage_lender like 'Platform Home Loans Limited' or mortgage_lender like 'Platform Home Loans';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Portman Asset Finance' where mortgage_lender like 'Portman Asset Finance';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Positive Lending Solutions' where mortgage_lender like 'Positive Lending Solutions';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Post Office' where mortgage_lender like 'Post Office' or mortgage_lender like 'Post Office for Intermediaries' or mortgage_lender like 'Post Office Ltd';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Precise Mortgages' where mortgage_lender like 'Precise';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Principality BS' where mortgage_lender like 'Principal Mortgages Limited' or mortgage_lender like 'Principality Building Society' or mortgage_lender like 'Principality Bsoc' or mortgage_lender like 'Principality $ Int.';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Santander UK Plc' where mortgage_lender like 'Alliance & Leicester' or mortgage_lender like 'Alliance & Leicester Plc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Santander UK Plc' where mortgage_lender like 'Santander' or mortgage_lender like 'Santander for Intermediaries' or mortgage_lender like 'Santander UK Plc (the lender)' or mortgage_lender like 'Abbey' or mortgage_lender like 'Abbey National';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Scottish BS' where mortgage_lender like 'Scottish Widows';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Scottish Widows Bank' where mortgage_lender like 'Scottish Widows Bank';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Shawbrook Bank' where mortgage_lender like 'Shawbrook' or mortgage_lender like 'Shawbrook Bank Limited';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Skipton BS' where mortgage_lender like 'Skipton' or mortgage_lender like 'Skipton Building Society' or mortgage_lender like 'Skipton Bsoc' or mortgage_lender like 'Skipton B S';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'TBMC' where mortgage_lender like 'TBMC - Mortgage Trust';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Tesco Bank' where mortgage_lender like 'Tesco' or mortgage_lender like 'TESCO' or mortgage_lender like 'Tesco Intermediary';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'The Hanley Economic BS' where mortgage_lender like 'Hanley Economic B S' or mortgage_lender like 'Hanley Economic Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'The Melton BS' where mortgage_lender like 'Melton Mowbray Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'The Melton BS' where mortgage_lender like 'The Mortgage Lender Limited';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'The Mortgage Lender' where mortgage_lender like 'The Mortgage Lender';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'The Mortgage Works' where mortgage_lender like 'Mortgage Works' or mortgage_lender like 'The Mortgage Works UK Ltd' or mortgage_lender like 'The Mortgage Works (UK) Plc.' or mortgage_lender like 'TMW' or mortgage_lender like 'TMW - The Mortgage Works';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Tipton & Coseley BS' where mortgage_lender like 'Tipton and Coseley B S' or mortgage_lender like 'Tipton and Coseley Building Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'TSB' where mortgage_lender like 'TSB Intermediaries';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Virgin Money' where mortgage_lender like 'Virgin Money plc';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'West Bromwich Building Society' where mortgage_lender like 'West Brom' or mortgage_lender like 'West Bromwich BS';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Chorley BS' where mortgage_lender like 'Chorley B Society';
+UPDATE GHL_w_provider_Faddress_4 SET mortgage_lender = 'Teachers BS' where mortgage_lender like 'Teachers';
+
+ALTER TABLE names_fixed add column person_id int;
+
+create table id_add (person_id integer primary key autoincrement, Review Due Date
+,"Client Name"
+,"Client DOB"
+,"Client Surname"
+,"Client"
+,"Forenames"
+,"yo"
+,"Contact number"
+,"Email address"
+,"Partner Surname"
+,"Partner Forenames"
+,"Partner DOB"
+,"Mortgage Type"
+,"Mortgage Interest Rate"
+,"Mortgage Interest Type"
+,"Mortgage Property Value"
+,"Mortgage Loan Value"
+,"Mortgage Outstanding Amount"
+,"Mortgage Purchase Price"
+,"Mortgage Repayment Method"
+,"Mortgage Term"
+,"Mortgage Deal Expiry Date"
+,"Start Date"
+,"Expiry Date"
+,"join_name"
+,"Client Nam e"
+,joinadd
+,Provider
+,fulladdress
+,consumer_advisor_name
+,mortgage_lender
+,mortgage_external_id
+,mortgage_refinances_mortgage_with_external_id
+,mortgage_charge
+,mortgage_loan_purpose
+,mortgage_payment_type
+,mortgage_type
+,mortgage_property_value
+,mortgage_loan_amount
+,mortgage_preferential_rate
+,mortgage_term
+,mortgage_expiry_date
+,mortgage_start_date
+,mortgage_description
+,property_external_id
+,property_value
+,property_address
+,consumer_external_id
+,consumer_submitted_but_not_completed
+,consumer_active
+,consumer_phone_number
+,consumer_name
+,consumer_email
+,mortgage_advisor_email
+,mortgage_advisor_name
+,consumer_advisor_email
+,consumer_datatpipe_id
+,property_datapipe_id
+,mortgage_datapipe_id
+,namefix);
+
+CREATE TABLE csv_for_addressium as select ID, property_address from pre_addressium;
+
+Create table Post_Canon_GHL as
+SELECT 
+pre_addressium.*, post_addressium.selected
+
+FROM pre_addressium
+    LEFT JOIN post_addressium
+     ON pre_addressium.ID = post_addressium.Property_Internal_ID ;
+
+
+ALTER TABLE ghl_reg_gen add column consumer_drip_enabled;
+ALTER TABLE ghl_reg_gen add column consumer_crm_id;
+ALTER TABLE ghl_reg_gen add column property_crm_id;
+ALTER TABLE ghl_reg_gen add column mortgage_crm_id;
+
+
+Create table ready_for_test_GHL as select mortgage_advisor_name
+,consumer_email
+,consumer_name
+,consumer_phone_number
+,property_address
+,property_value
+,mortgage_start_date
+,mortgage_expiry_date
+,mortgage_term
+,mortgage_preferential_rate
+,mortgage_loan_amount
+,mortgage_property_value
+,mortgage_type
+,mortgage_payment_type
+,mortgage_lender
+,mortgage_loan_purpose
+,consumer_datapipe_id
+,property_datapipe_id
+,mortgage_datapipe_id
+,mortgage_advisor_email
+,consumer_active
+,consumer_drip_enabled
+,consumer_crm_id
+,property_crm_id
+,mortgage_description
+,mortgage_charge
+,mortgage_crm_id from ghl_reg_gen;
+     
+SELECT "mortgage.loan.value","mortgage.property.value", mortgage_property_value, mortgage_loan_amount, * FROM ghl_reg_gen;
+
+
+SELECT "mortgage.property.value"
+,"mortgage.loan.value"
+,"mortgage.outstanding.amount"
+,"Mortgage.Purchase.Price" from ghl_reg_gen;
+
+CREATE TABLE test_GHM as SELECT "Review Due Date"
+,"Client Name"
+,"Client DOB"
+,"Client Surname"
+,"Client Forenames"
+,"Address"
+,"Client Postcode"
+,"Contact number"
+,"Email address"
+,"Partner Surname"
+,"Partner Forenames"
+,"Partner DOB"
+,"Mortgage Type"
+,"Mortgage Interest Rate"
+,"Mortgage Interest Type"
+,"Mortgage Property Value"
+,"Mortgage Loan Value"
+,"Mortgage Outstanding Amount"
+,"Mortgage Purchase Price"
+,"Mortgage Repayment Method"
+,"Mortgage Term"
+,"Mortgage Deal Expiry Date"
+,"Start Date"
+,"Expiry Date"
+,"join_name"
+,"Client Nam e"
+,"joinadd"
+,"Provider"
+,property_address from GHL_w_provider_Faddress_4;
